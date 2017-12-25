@@ -678,7 +678,10 @@ def insert_works_into_database_from_anilist(entries: List[AniListEntry]) -> Opti
 
         # Save the Work object and add a Reference
         work.save()
-        Reference.objects.get_or_create(work=work, url=entry.anilist_url)
+        Reference.objects.get_or_create(work=work,
+                                        source='AniList',
+                                        identifier=entry.anilist_id,
+                                        url=entry.anilist_url)
         new_works.append(work)
 
     return new_works if new_works else None
